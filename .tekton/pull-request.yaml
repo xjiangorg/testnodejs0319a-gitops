@@ -1,0 +1,47 @@
+apiVersion: tekton.dev/v1
+kind: PipelineRun
+metadata:
+  name: testnodejs0319a-on-pull-request
+  namespace: testnodejs0319a
+  labels:
+    argocd/app-name: testnodejs0319a
+    janus-idp.io/tekton: testnodejs0319a
+    backstage.io/kubernetes-id: testnodejs0319a
+    backstage.io/kubernetes-namespace: testnodejs0319a 
+    app.kubernetes.io/part-of: testnodejs0319a
+  annotations:
+    pipelinesascode.tekton.dev/on-event: "[pull_request]"
+    pipelinesascode.tekton.dev/on-target-branch: "[main]"
+    pipelinesascode.tekton.dev/max-keep-runs: "2"
+    pipelinesascode.tekton.dev/pipeline: "https://raw.githubusercontent.com/redhat-appstudio/tssc-sample-pipelines/main/new-for-dance/pipelines-helm/pipeline-promote.yaml"
+    # Todo: pac tasks need to be added after the pipleline has been finalized
+    # pipelinesascode.tekton.dev/task-0: "https://raw.githubusercontent.com/redhat-appstudio/tssc-sample-pipelines/main/pac/tasks/init.yaml"
+    # pipelinesascode.tekton.dev/task-1: "https://raw.githubusercontent.com/redhat-appstudio/tssc-sample-pipelines/main/pac/tasks/git-clone.yaml"
+    # pipelinesascode.tekton.dev/task-2: "https://raw.githubusercontent.com/redhat-appstudio/tssc-sample-pipelines/main/new-for-dance/tasks/task-verify-enterprise-contract.yaml"
+spec: 
+  params:
+  # Todo: params need to be updated after the pipeline has been finalized
+  - name: namespace
+    value: testnodejs0319a
+  - name: gitops-repo-url
+    value: https://github.com/xjiangorg/testnodejs0319a-gitops
+  - name: source-repo-url
+    value: https://github.com/xjiangorg/testnodejs0319a
+  - name: component-id
+    value: testnodejs0319a
+  - name: revision
+    value: '{{revision}}'
+  - name: argocd-host
+    value: argocd.example.com # hardcoded for now
+  pipelineRef:
+    name: testnodejs0319a-gitops-promote
+  workspaces:
+    - name: workspace
+      volumeClaimTemplate: 
+        spec:
+          accessModes:
+          - ReadWriteOnce
+          resources:
+            requests:
+              storage: 1Gi
+ 
