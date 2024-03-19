@@ -12,5 +12,5 @@ spec:
   template: 
     spec:
       containers:
-      - image: quay.io/xinjiang/testnodejs0319a:on-pr-c04c47680b0b0bddcaef95aac2c899405dc1c2f8@sha256:427c1a316e405644bb179b1a0f1cc97928f4d1815e61821df84e1e61adebaf2d
+      - image: quay.io/xinjiang/testnodejs0319a:on-pr-4bae6c723af856b47af7156069c29dadc93bc666@sha256:f014a6532b626e5a26cd551d347bb6ce29e27cbc61f02e4004dda211d0381482
         name: container-image  
